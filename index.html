@@ -320,9 +320,9 @@
 				
 				// crossbrowser implementation for requestAnimationFrame
 				var requestAnimation = (function() {
-					return //window.requestAnimationFrame 
-					//|| window.webkitRequestAnimationFrame 
-					|| window.mozRequestAnimationFrame 
+					return /*window.requestAnimationFrame 
+					|| window.webkitRequestAnimationFrame 
+					||*/ window.mozRequestAnimationFrame 
 					|| window.oRequestAnimationFrame 
 					|| window.msRequestAnimationFrame 
 					|| function(callback, element) {
