@@ -319,13 +319,19 @@
 				};
 				
 				// crossbrowser implementation for requestAnimationFrame
-				var requestAnimation = (function() {
-					return /*window.requestAnimationFrame 
+				/*var requestAnimation = (function() {
+					return window.requestAnimationFrame 
 					|| window.webkitRequestAnimationFrame 
-					||*/ window.mozRequestAnimationFrame 
+					|| window.mozRequestAnimationFrame 
 					|| window.oRequestAnimationFrame 
 					|| window.msRequestAnimationFrame 
 					|| function(callback, element) {
+						window.setTimeout(callback, 1000/60);
+					};
+				})();*/
+				
+				var requestAnimation = (function() {
+					return function(callback, element) {
 						window.setTimeout(callback, 1000/60);
 					};
 				})();
