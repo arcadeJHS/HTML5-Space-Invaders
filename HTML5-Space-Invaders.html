@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<head>
+  <head>
 		<title>Space Invaders</title>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
 		<style type="text/css">
@@ -318,17 +318,32 @@
 					return el.querySelector(selector);  
 				};
 				
-				// crossbrowser implementation for requestAnimationFrame
-				var requestAnimation = (function() {
-					return window.requestAnimationFrame 
-					|| window.webkitRequestAnimationFrame 
-					|| window.mozRequestAnimationFrame 
-					|| window.oRequestAnimationFrame 
-					|| window.msRequestAnimationFrame 
-					|| function(callback, element) {
-						window.setTimeout(callback, 1000/60);
-					};
-				})();
+				
+				(function() {
+					var lastTime = 0;
+					var vendors = ['ms', 'moz', 'webkit', 'o'];
+					for(var x = 0; x < vendors.length && !window.requestAnimationFrameFrame; ++x) {
+						window.requestAnimationFrameFrame = window[vendors[x]+'requestAnimationFrameFrame'];
+						window.cancelAnimationFrame = 
+						  window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelrequestAnimationFrameFrame'];
+					}
+				 
+					if (!window.requestAnimationFrameFrame)
+						window.requestAnimationFrameFrame = function(callback, element) {
+							var currTime = new Date().getTime();
+							var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+							var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+							  timeToCall);
+							lastTime = currTime + timeToCall;
+							return id;
+						};
+				 
+					if (!window.cancelAnimationFrame)
+						window.cancelAnimationFrame = function(id) {
+							clearTimeout(id);
+						};
+				}());
+				
 				
 				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				// game objects 
@@ -1308,8 +1323,9 @@
 						
 						// animation loop
 						var gameWrapper = $("#game");
-						var startTime = window.mozAnimationStartTime || +new Date;
-						requestAnimation(loop, gameWrapper);
+						var startTime = window.performance.now() ||  window.mozAnimationStartTime || +new Date;
+
+						requestAnimationFrame(loop, gameWrapper);
 						function loop(timestamp) {
 							// time since last draw
 							var drawStart = (timestamp || +new Date);
@@ -1325,7 +1341,7 @@
 								startTime = drawStart;
 							}
 							
-							requestAnimation(loop, gameWrapper);
+							requestAnimationFrame(loop, gameWrapper);
 						}
 					}
 					
@@ -1447,9 +1463,11 @@
 					
 					// animation loop
 					var gameWrapper = $("#game");
-					var startTime = window.mozAnimationStartTime || +new Date;
-					requestAnimation(loop, gameWrapper);
+					debugger;
+					var startTime = window.performance.now() ||  window.mozAnimationStartTime || +new Date;
+					requestAnimationFrame(loop, gameWrapper);
 					function loop(timestamp) {
+						
 						// time since last draw
 						var drawStart = (timestamp || +new Date);
 						var diff = drawStart - startTime;
@@ -1467,7 +1485,7 @@
 							startTime = drawStart;
 						}
 						
-						requestAnimation(loop, gameWrapper);
+						requestAnimationFrame(loop, gameWrapper);
 					}
 				};
 				
