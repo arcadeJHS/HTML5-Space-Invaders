@@ -1323,26 +1323,27 @@
 						
 						// animation loop
 						var gameWrapper = $("#game");
-						var startTime = window.performance.now() ||  window.mozAnimationStartTime || +new Date;
-
-						requestAnimationFrame(loop, gameWrapper);
-						function loop(timestamp) {
+						//var startTime = window.performance.now() ||  window.mozAnimationStartTime || +new Date;
+						//startTime = (window.performance && window.performance.now) ? performance.now() : (window.mozAnimationStartTime ? window.mozAnimationStartTime : +new Date());
+						
+						//requestAnimationFrame(loop, gameWrapper);
+						(function loop(timestamp) {
 							// time since last draw
-							var drawStart = (timestamp || +new Date);
-							var diff = drawStart - startTime;
+							//var drawStart = (timestamp || +new Date);
+							//var diff = drawStart - startTime;
 
 							// update frame rate
-							if (diff > 1000/66) 
-							{
+							//if (diff > 1000/33) 
+							//{
 								// animation
 								gameLoop();
 								
 								// reset startTime
-								startTime = drawStart;
-							}
+								//startTime = drawStart;
+							//}
 							
 							requestAnimationFrame(loop, gameWrapper);
-						}
+						}());
 					}
 					
 					img.src = spriteSheet;
@@ -1463,18 +1464,19 @@
 					
 					// animation loop
 					var gameWrapper = $("#game");
-					debugger;
-					var startTime = window.performance.now() ||  window.mozAnimationStartTime || +new Date;
-					requestAnimationFrame(loop, gameWrapper);
-					function loop(timestamp) {
+					//var startTime = window.performance.now() ||  window.mozAnimationStartTime || +new Date;
+					//startTime = (window.performance && window.performance.now) ? performance.now() : (window.mozAnimationStartTime ? window.mozAnimationStartTime : +new Date());
+					
+					//requestAnimationFrame(loop, gameWrapper);
+					(function loop(timestamp) {
 						
 						// time since last draw
-						var drawStart = (timestamp || +new Date);
-						var diff = drawStart - startTime;
+						//var drawStart = (timestamp || +new Date);
+						//var diff = drawStart - startTime;
 
 						// update frame rate
-						if (diff > 1000/60) 
-						{
+						//if (diff > 1000/30) 
+						//{
 							// animation
 							context.clearRect(0, 0, canvas.width, canvas.height);							
 							sky.drawStars();
@@ -1482,11 +1484,11 @@
 							if (human.credit > 0) textHelper.changeTextColor("#play"); 
 							
 							// reset startTime
-							startTime = drawStart;
-						}
+							//startTime = drawStart;
+						//}
 						
 						requestAnimationFrame(loop, gameWrapper);
-					}
+					}());
 				};
 				
 				var _instructions = function() {
