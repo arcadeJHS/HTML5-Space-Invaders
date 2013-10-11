@@ -454,7 +454,15 @@
 					};
 					
 					this.touchBorder = function() {
-						return ( this.x+aliens.alienSquareWidth+5 >= canvas.width || (this.x-(aliens.alienSquareWidth-this.sprite.width)/2 <= 0) );
+						if(aliens.alienSpeedX > 0) {
+							//console.log('looking right');
+							var rightX = this.x+aliens.alienSquareWidth+5;
+							return ( rightX >= canvas.width );
+						} else {
+							//console.log('looking left');
+							var leftX = this.x-(aliens.alienSquareWidth-this.sprite.width)/2;
+							return ( leftX <= 0 );
+						}
 					};
 					
 					this.setSprite = function(sprite) {
