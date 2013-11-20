@@ -1153,14 +1153,16 @@
 							// set @keyframes using CSSOM: "from" and "to" are derived from <p> offsetWidth
 							var style = document.documentElement.appendChild(document.createElement("style"));
 							var rule =	p.id + "_typing {from {width: 0} to {width: " + nChar + "em}}";	// setting width this way avoids problems due to @fontface loading delay
-							if (CSSRule.KEYFRAMES_RULE) { // W3C
-								style.sheet.insertRule("@keyframes " + rule, 0);
-							} 
-							else if (CSSRule.WEBKIT_KEYFRAMES_RULE) { // WebKit
+							if (CSSRule.WEBKIT_KEYFRAMES_RULE) { 
 								style.sheet.insertRule("@-webkit-keyframes " + rule, 0);
 							}
-							else if (CSSRule.MOZ_KEYFRAMES_RULE) { // WebKit
+							// Mozilla
+							else if (CSSRule.MOZ_KEYFRAMES_RULE) { 
 								style.sheet.insertRule("@-moz-keyframes " + rule, 0);
+							}
+							// W3C
+							else if (CSSRule.KEYFRAMES_RULE) { 
+								style.sheet.insertRule("@keyframes " + rule, 0);
 							}
 							///
 							
